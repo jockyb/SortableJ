@@ -1,0 +1,60 @@
+SortableJ
+
+Programming challenge for Sortable.
+
+Dependencies: gson 2.4 (included in jar)
+
+Instructions
+-------------------------------------------------------------------
+Run the compiled jar in a folder that contains the folder "input" that 
+contains "products.txt" and "listings.txt" input files as well as a "settings" 
+folder that contains "CompanyAlias.json" and "ParsingRegex.json"
+
+java -jar sortableJ.jar
+
+Default file locations or names can be overwritten using the following VM arguments.
+
+Path to input products file: -Dproducts="input/products.txt"
+Path to input listings file: -Dlistings="input/listings.txt"
+Path to input Company Alias file: -Daliases="settings/CompanyAlias.json"
+Path to input Company Alias file: -Dregex="settings/ParsingRegex.json"
+Path to directory where output will be generated: -DoutputDir="output"
+
+
+ParsingRegex.json
+-------------------------------------------------------------------
+Sets the "Strong" and "Weak" regular expressions used for parsing titles.
+
+strongRegex: String of characters in a title that are always replaced with white space (delimiters).
+weakRegex: String of characters in a title that can be replaced with white space or removed entirely (optional characters).
+
+Note: Be sure to escape Special JSON characters like quotes
+
+Default value
+{
+	"strongRegex":",\"'`/()[]",
+	"weakRegex":"-"
+}
+
+
+CompanyAlias.json
+-------------------------------------------------------------------
+A list of manufacturer names matched to an array of lowercase strings of alternate names a company may be known as in the listings file
+
+eg. Hewlett Packard products are all listed under manufacturer="HP" in products.txt but can either be "HP" or "Hewlett Packard" in listings.txt
+To treat these manufacturers as the same manufacturer, add the following to CompanyAlias.json
+
+Note: It is not not necessary to add in long form names like "Samsung Camera" vs. "Samsung" as long as the products manufacturer is a substring of the listings manufacturer.
+
+{
+	"companyName":"hp",
+	"aliases":["hewlett packard"]
+}
+
+There is also a special companyName value "all" that allows certain manufacturers' listings to be included in the search for all other manufacturers products.
+This is for listings that use catch all manufacturer names like "various"
+
+{
+	"companyName":"all",
+	"aliases":["various", "----------------------------"]
+}
